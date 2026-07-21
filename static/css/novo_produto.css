@@ -1,0 +1,207 @@
+/* =======================
+   RESET
+======================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* =======================
+   CONTAINER
+======================= */
+
+.container{
+
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+/* =======================
+   CARD
+======================= */
+
+.card{
+
+    width:100%;
+    max-width:750px;
+
+    background:#1e293b;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+}
+
+.card h1{
+
+    margin-bottom:10px;
+
+    font-size:32px;
+
+}
+
+.card p{
+
+    color:#94a3b8;
+
+    margin-bottom:30px;
+
+}
+
+/* =======================
+   FORM
+======================= */
+
+form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+label{
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+input{
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#0f172a;
+
+    color:white;
+
+    outline:none;
+
+    border:1px solid #334155;
+
+}
+
+input:focus{
+
+    border:1px solid #2563eb;
+
+}
+
+/* =======================
+   BOTÃO
+======================= */
+
+button{
+
+    margin-top:10px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* =======================
+   VOLTAR
+======================= */
+
+.voltar{
+
+    display:inline-block;
+
+    margin-bottom:25px;
+
+    color:#60a5fa;
+
+    text-decoration:none;
+
+}
+
+.voltar:hover{
+
+    text-decoration:underline;
+
+}
+
+/* =======================
+   RESPONSIVO
+======================= */
+
+@media(max-width:700px){
+
+.row{
+
+grid-template-columns:1fr;
+
+}
+
+.card{
+
+padding:25px;
+
+}
+
+}

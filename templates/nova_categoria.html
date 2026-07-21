@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>StockMaster | Nova categoria</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/form_categoria.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <main class="form-container">
+
+        <section class="form-card">
+
+            <a
+                href="{{ url_for('categorias') }}"
+                class="btn-voltar"
+            >
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar para categorias
+            </a>
+
+            <div class="form-header">
+                <h1>Nova categoria</h1>
+                <p>Cadastre uma nova categoria de produto.</p>
+            </div>
+
+            <form method="POST">
+
+                <div class="form-group">
+
+                    <label for="nome_categoria">
+                        Nome da categoria
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome_categoria"
+                        name="nome_categoria"
+                        placeholder="Exemplo: Eletrônicos"
+                        required
+                    >
+
+                </div>
+
+                <button type="submit">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Cadastrar categoria
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

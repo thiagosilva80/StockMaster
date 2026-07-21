@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #f8fafc;
+    background:
+        radial-gradient(circle at top right, rgba(14, 165, 233, 0.22), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.18), transparent 35%),
+        #0f172a;
+}
+
+.cadastro-container {
+    width: 100%;
+    max-width: 470px;
+    padding: 40px;
+    background: rgba(30, 41, 59, 0.94);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 22px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    animation: aparecer 0.6s ease;
+}
+
+.cadastro-container h1 {
+    margin-bottom: 8px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 31px;
+}
+
+.cadastro-container p {
+    margin-bottom: 28px;
+    text-align: center;
+    color: #94a3b8;
+}
+
+.cadastro-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cadastro-container label {
+    margin-bottom: -9px;
+    color: #cbd5e1;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.cadastro-container input {
+    width: 100%;
+    padding: 15px 16px;
+    color: #f8fafc;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+.cadastro-container input::placeholder {
+    color: #64748b;
+}
+
+.cadastro-container input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.13);
+}
+
+.cadastro-container button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 4px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.cadastro-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(14, 165, 233, 0.3);
+}
+
+.cadastro-container a {
+    display: block;
+    margin-top: 22px;
+    color: #7dd3fc;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.cadastro-container a:hover {
+    text-decoration: underline;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 500px) {
+    .cadastro-container {
+        padding: 30px 22px;
+    }
+
+    .cadastro-container h1 {
+        font-size: 27px;
+    }
+}

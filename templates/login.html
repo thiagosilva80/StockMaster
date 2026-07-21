@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMaster - Login</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+
+<div class="login-container">
+
+    <h1>📦 StockMaster</h1>
+    <p>Controle de Estoque</p>
+
+    <form action="{{ url_for('login') }}" method="POST">
+
+        <input type="email"
+               name="email"
+               placeholder="E-mail"
+               required>
+
+        <input type="password"
+               name="senha"
+               placeholder="Senha"
+               required>
+
+        <button type="submit">
+            Entrar
+        </button>
+
+    </form>
+
+    <a href="/cadastro">Criar Conta</a>
+
+</div>
+
+</body>
+</html>

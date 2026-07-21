@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockMaster | Produtos</title>
+
+    <link
+        rel="stylesheet"
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/produtos.css') }}">
+    >
+</head>
+
+<body>
+
+<div class="page">
+
+    <header class="topbar">
+
+        <div>
+           <a href="{{ url_for('dashboard') }}" class="btn-voltar">
+    <i class="fa-solid fa-arrow-left"></i>
+    Voltar ao Dashboard
+</a>
+
+            <h1>Produtos</h1>
+
+            <p>Produtos cadastrados no estoque.</p>
+        </div>
+<a href="{{ url_for('novo_produto') }}" class="btn-novo">
+    <i class="fa-solid fa-plus"></i>
+    Novo produto
+</a>
+
+    </header>
+
+    <section class="toolbar">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="pesquisa-produto"
+                placeholder="Pesquisar produto..."
+>
+
+        </div>
+
+        <div class="product-counter">
+            {{ produtos|length }} produto(s)
+        </div>
+
+    </section>
+
+    <section class="table-card">
+
+        <div class="table-wrapper">
+
+            <table id="tabela-produtos">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Código</th>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Fornecedor</th>
+                        <th>Quantidade</th>
+                        <th>Compra</th>
+                        <th>Venda</th>
+                        <th>Cadastro</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for produto in produtos %}
+
+                    <tr>
+                        <td>#{{ produto.id_produto }}</td>
+
+                        <td>{{ produto.codigo_produto }}</td>
+
+                        <td class="product-name">
+                            {{ produto.nome_produto }}
+                        </td>
+
+                        <td>{{ produto.categoria_id }}</td>
+
+                        <td>{{ produto.fornecedor_id }}</td>
+
+                        <td>{{ produto.quantidade_produto }}</td>
+
+                        <td>
+                            R$ {{ "%.2f"|format(produto.preco_compra_produto) }}
+                        </td>
+
+                        <td>
+                            R$ {{ "%.2f"|format(produto.preco_venda_produto) }}
+                        </td>
+
+                        <td>
+                            {{ produto.data_cadastro_produto.strftime("%d/%m/%Y") }}
+                        </td>
+
+                        <td>
+
+                            {% if produto.quantidade_produto == 0 %}
+
+                                <span class="status status-empty">
+                                    Sem estoque
+                                </span>
+
+                            {% elif produto.quantidade_produto <= 5 %}
+
+                                <span class="status status-low">
+                                    Estoque baixo
+                                </span>
+
+                            {% else %}
+
+                                <span class="status status-ok">
+                                    Disponível
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td
+                            class="empty-message"
+                            colspan="10"
+                        >
+                            Nenhum produto cadastrado.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/produtos.js') }}"></script>
+
+</body>
+
+</html>

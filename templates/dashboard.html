@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockMaster | Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>📦 StockMaster</h2>
+
+        </div>
+
+       <nav>
+    <ul>
+
+        <li class="active">
+            <a href="{{ url_for('dashboard') }}">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('produtos') }}">
+                <i class="fa-solid fa-box"></i>
+                <span>Produtos</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('categorias') }}">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Categorias</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-arrow-right"></i>
+                <span>Entradas</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Saídas</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>Histórico</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Relatórios</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-gear"></i>
+                <span>Configurações</span>
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPO -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Dashboard</h1>
+
+                <p>Bem-vindo ao StockMaster</p>
+
+            </div>
+
+            <div class="profile">
+
+                <i class="fa-solid fa-user"></i>
+
+                <span>Thiago</span>
+
+            </div>
+
+        </header>
+
+        <!-- CARDS -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <i class="fa-solid fa-box"></i>
+
+                <h3>Produtos</h3>
+
+                <h2>120</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                <h3>Estoque Baixo</h3>
+
+                <h2>08</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+                <h3>Entradas Hoje</h3>
+
+                <h2>15</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-arrow-trend-down"></i>
+
+                <h3>Saídas Hoje</h3>
+
+                <h2>06</h2>
+
+            </div>
+
+        </section>
+
+        <!-- CONTEÚDO -->
+
+        <section class="content">
+
+            <!-- gráfico -->
+
+            <div class="chart">
+
+                <h2>Movimentação do Estoque</h2>
+
+                <div class="chart-placeholder">
+
+                    📊 Em breve teremos um gráfico com Chart.js
+
+                </div>
+
+            </div>
+
+            <!-- tabela -->
+
+            <div class="table-container">
+
+                <h2>Últimas Movimentações</h2>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Produto</th>
+
+                            <th>Tipo</th>
+
+                            <th>Quantidade</th>
+
+                            <th>Data</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>Notebook Dell</td>
+
+                            <td>Entrada</td>
+
+                            <td>10</td>
+
+                            <td>20/07/2026</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Mouse Logitech</td>
+
+                            <td>Saída</td>
+
+                            <td>3</td>
+
+                            <td>20/07/2026</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Monitor LG</td>
+
+                            <td>Entrada</td>
+
+                            <td>5</td>
+
+                            <td>19/07/2026</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Teclado Redragon</td>
+
+                            <td>Saída</td>
+
+                            <td>2</td>
+
+                            <td>19/07/2026</td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+
+</html>

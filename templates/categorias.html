@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>StockMaster | Categorias</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/categorias.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+    <main class="categorias-container">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn-voltar"
+        >
+            <i class="fa-solid fa-arrow-left"></i>
+            Voltar ao Dashboard
+        </a>
+
+        <header class="categorias-header">
+
+            <div>
+                <h1>Categorias</h1>
+                <p>Gerencie as categorias dos produtos.</p>
+            </div>
+
+            <a
+                href="{{ url_for('nova_categoria') }}"
+                class="btn-nova"
+            >
+                <i class="fa-solid fa-plus"></i>
+                Nova categoria
+            </a>
+
+        </header>
+
+        <section class="categorias-card">
+
+            <div class="categorias-topo">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="pesquisa-categoria"
+                        placeholder="Pesquisar categoria..."
+                    >
+
+                </div>
+
+                <span class="total-categorias">
+                    {{ categorias|length }} categoria(s)
+                </span>
+
+            </div>
+
+            <div class="tabela-wrapper">
+
+                <table id="tabela-categorias">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome da categoria</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% if categorias %}
+
+                            {% for categoria in categorias %}
+
+                                <tr>
+                                    <td>
+                                        {{ categoria.id_categoria }}
+                                    </td>
+
+                                    <td>
+                                        {{ categoria.nome_categoria }}
+                                    </td>
+
+                                    <td class="acoes">
+
+                                        <a
+                                            href="{{ url_for('editar_categoria', id_categoria=categoria.id_categoria) }}"
+                                            class="btn-acao btn-editar"
+                                            title="Editar"
+                                        >
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+                                        <a
+                                            href="{{ url_for('excluir_categoria', id_categoria=categoria.id_categoria) }}"
+                                            class="btn-acao btn-excluir"
+                                            title="Excluir"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <tr>
+                                <td
+                                    colspan="3"
+                                    class="sem-categorias"
+                                >
+                                    <i class="fa-solid fa-layer-group"></i>
+
+                                    <p>
+                                        Nenhuma categoria cadastrada.
+                                    </p>
+                                </td>
+                            </tr>
+
+                        {% endif %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='js/categorias.js') }}"
+    ></script>
+
+</body>
+
+</html>

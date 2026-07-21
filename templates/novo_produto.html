@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StockMaster | Novo Produto</title>
+
+    <link
+        <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/novo_produto.css') }}"
+>
+    >
+</head>
+
+<body>
+
+<main class="form-page">
+
+    <section class="form-card">
+
+        <a
+            class="back-link"
+            href="{{ url_for('produtos') }}"
+        >
+            Voltar para produtos
+        </a>
+
+        <h1>Novo produto</h1>
+
+        <p>Cadastre um novo item no estoque.</p>
+
+        <form method="POST">
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+
+                    <input
+                        type="text"
+                        id="codigo"
+                        name="codigo"
+                        maxlength="20"
+                        placeholder="Ex.: PROD001"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        maxlength="100"
+                        placeholder="Ex.: Mouse Logitech"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="categoria_id">ID da categoria</label>
+
+                    <input
+                        type="number"
+                        id="categoria_id"
+                        name="categoria_id"
+                        min="1"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="fornecedor_id">ID do fornecedor</label>
+
+                    <input
+                        type="number"
+                        id="fornecedor_id"
+                        name="fornecedor_id"
+                        min="1"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+
+                <input
+                    type="number"
+                    id="quantidade"
+                    name="quantidade"
+                    min="0"
+                    value="0"
+                    required
+                >
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="preco_compra">Preço de compra</label>
+
+                    <input
+                        type="text"
+                        id="preco_compra"
+                        name="preco_compra"
+                        placeholder="Ex.: 80,00"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="preco_venda">Preço de venda</label>
+
+                    <input
+                        type="text"
+                        id="preco_venda"
+                        name="preco_venda"
+                        placeholder="Ex.: 120,00"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="data_cadastro">Data de cadastro</label>
+
+                <input
+                    type="date"
+                    id="data_cadastro"
+                    name="data_cadastro"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Salvar produto
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>
