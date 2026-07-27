@@ -60,7 +60,7 @@ def cadastro():
         try:
             with conexao.cursor() as cursor:
 
-                # Confere se o e-mail já existe
+            
                 sql_verificar = """
                     SELECT id_usuario
                     FROM tbl_usuario
@@ -73,7 +73,7 @@ def cadastro():
                 if usuario_existente:
                     return "Este e-mail já está cadastrado!"
 
-                # Insere o usuário
+        
                 sql_inserir = """
                     INSERT INTO tbl_usuario
                     (
@@ -145,70 +145,115 @@ def produtos():
         conexao.close()
         
     
-@app.route("/produtos/novos", methods =["GET", "POST"] )
+@app.route("/produtos/novos", methods=["GET", "POST"])
 def novo_produto():
-    
-    if request.method == "POST":
-        codigo = request.form.get("codigo")
-        nome = request.form.get("nome")
-        categoria_id = request.form.get("categoria_id")
-        fornecedor_id = request.form.get("fornecedor_id")
-        quantidade = request.form.get("quantidade")
-        preco_compra = request.form.get("preco_compra")
-        preco_venda = request.form.get("preco_venda")
-        data_cadastro = request.form.get("data_cadastro")
+
+    conexao = criar_conexao()
+
+    try:
+        with conexao.cursor() as cursor:
+
+           
+            cursor.execute("""
+                SELECT
+                    id_categoria,
+                    nome_categoria
+                FROM tbl_categorias
+                ORDER BY nome_categoria
+            """)
+
+            categorias = cursor.fetchall()
+
+            cursor.execute("""
+                SELECT
+                    id_fornecedores,
+                    nome_fornecedores
+                FROM tbl_fornecedores
+                ORDER BY nome_fornecedores
+            """)
+
+            fornecedores = cursor.fetchall()
+
         
-        if not codigo or not nome:
-            return "Prencha o codigo e o nome do produto."
-        
-        conexao = criar_conexao()
-        
-        try:
-            with conexao.cursor() as cursor: 
+
+        if request.method == "POST":
+
+            codigo = request.form.get("codigo")
+            nome = request.form.get("nome")
+
+            categoria_id = request.form.get("categoria_id")
+            fornecedor_id = request.form.get("fornecedor_id")
+
+            quantidade = request.form.get("quantidade")
+
+            preco_compra = request.form.get("preco_compra")
+            preco_venda = request.form.get("preco_venda")
+
+            data_cadastro = request.form.get("data_cadastro")
+
+            if not codigo or not nome:
+                return "Preencha o código e o nome do produto."
+
+            with conexao.cursor() as cursor:
+
                 sql = """
-                INSERT INT tbl_produtos(
-                    codigo_produto,
-                    nome_produto,
-                    categoria_id,
-                    fornecedor_id,
-                    quantidade_produto,
-                    preco_compra_produto,
-                    preco_venda_produto,
-                    data_cadastro_produto
-                )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                """
-                cursor.execute(
-                    sql,
-                    (
-                        codigo,
-                        nome, 
-                        int(categoria_id),
-                        int(fornecedor_id),
-                        int(quantidade),
-                        float(preco_compra.replace(",", ".")),
-                        float(preco_venda.replace(",", ".")),
-                        data_cadastro
+                    INSERT INTO tbl_produtos (
+                        codigo_produto,
+                        nome_produto,
+                        categoria_id,
+                        fornecedor_id,
+                        quantidade_produto,
+                        preco_compra_produto,
+                        preco_venda_produto,
+                        data_cadastro_produto
                     )
+
+                    VALUES (
+                        %s, %s, %s, %s,
+                        %s, %s, %s, %s
+                    )
+                """
+
+                valores = (
+                    codigo,
+                    nome,
+                    int(categoria_id),
+                    int(fornecedor_id),
+                    int(quantidade),
+                    float(preco_compra.replace(",", ".")),
+                    float(preco_venda.replace(",", ".")),
+                    data_cadastro
                 )
-                
+
+                cursor.execute(sql, valores)
+
                 conexao.commit()
-            
+
             return redirect(url_for("produtos"))
-        
-        except ValueError:
-            conexao.rollback()
-            return "Categoria, fornecedor ou quantidade inválidos."
-        
-        except Exception as erro:
-            conexao.rollback()
-            print("Erro ao cadastrar produto:", erro)
-            return "Erro ao cadastrar produto."
-        
-        finally:
-            conexao.close()
-            
-    return render_template ("novo_produto.html")
+
+        return render_template(
+            "novo_produto.html",
+            categorias=categorias,
+            fornecedores=fornecedores
+        )
+
+    except ValueError:
+
+        conexao.rollback()
+
+        return "Quantidade ou preço inválido."
+
+    except Exception as erro:
+
+        conexao.rollback()
+
+        print("Erro ao cadastrar produto:", erro)
+
+        return "Erro ao cadastrar produto."
+
+    finally:
+
+        conexao.close()
 
 @app.route ("/categorias")
 def categorias():
@@ -334,6 +379,80 @@ def excluir_categoria(id_categoria):
         print("Erro ao excluir categoria:", erro)
         return "Erro ao excluir categoria."
 
+    finally:
+        conexao.close()
+        
+@app.route("/entradas", methods=["GET", "POST"])
+def entrada():
+    conexao = criar_conexao()
+    
+    try:
+        if request.method == "POST":
+            produtos_id = request.form.get("produto_id")
+            quantidade = request.form.get("quantidade")
+            
+            if not produtos_id or not quantidade:
+                return "Selecione o produto e informe a quantidade."
+            
+            produtos_id = int(produtos_id)
+            quantidade = int(quantidade)
+            
+            if quantidade <= 0:
+                return "A quantidade deve ser maior que zero."
+            
+            with conexao.cursor() as cursor:
+                
+                cursor.execute("""
+                UPDATE tbl_produtos
+                SET quantidade_produto =
+                    quantidade_produto + %s
+                WHERE id_produto = %s               
+            """, (
+                quantidade,
+                produtos_id
+            ))
+                
+                cursor.execute("""
+                INSERT INTO tbl_movimentacoes(
+                    produtos_id,
+                    tipo_movimentacoes,
+                    quantidade_movimentacoes,
+                    data_movimentacoes              
+                    )
+                    VALUES(%s, %s, %s, NOW())
+                    """, (
+                        produtos_id,
+                        "Entrada",
+                        quantidade
+                    ))
+                    
+                conexao.commit()
+                
+            return redirect(url_for("entrada"))
+        
+        with conexao.cursor() as cursor:
+            
+            cursor.execute("""
+                SELECT 
+                id_produto,
+                nome_produto
+            FROM tbl_produtos
+            ORDER BY nome_produto           
+        """)
+            produtos = cursor.fetchall()
+            
+        return render_template(
+            "entrada.html",
+            produtos=produtos
+        )
+        
+    except Exception as erro:
+        conexao.rollback()
+        
+        print("Erro na entrada:", erro)
+        
+        return "Erro ao registrar entrada."
+    
     finally:
         conexao.close()
                         
