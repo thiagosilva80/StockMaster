@@ -166,10 +166,10 @@ def novo_produto():
         try:
             with conexao.cursor() as cursor: 
                 sql = """
-                INSERT INTP tbl_produtos(
+                INSERT INT tbl_produtos(
                     codigo_produto,
                     nome_produto,
-                    catagoria_id,
+                    categoria_id,
                     fornecedor_id,
                     quantidade_produto,
                     preco_compra_produto,
@@ -186,13 +186,13 @@ def novo_produto():
                         int(categoria_id),
                         int(fornecedor_id),
                         int(quantidade),
-                        preco_compra.render_template(",", "."),
-                        preco_venda.render_template(",", "."),
+                        float(preco_compra.replace(",", ".")),
+                        float(preco_venda.replace(",", ".")),
                         data_cadastro
                     )
                 )
                 
-                conexao.commit
+                conexao.commit()
             
             return redirect(url_for("produtos"))
         
@@ -206,7 +206,7 @@ def novo_produto():
             return "Erro ao cadastrar produto."
         
         finally:
-            conexao.close
+            conexao.close()
             
     return render_template ("novo_produto.html")
 
@@ -267,7 +267,7 @@ def nova_categoria():
             return "Erro ao cadastrar categoria."
         
         finally:
-            conexao.close
+            conexao.close()
     return render_template("nova_categoria.html")
 
 @app.route("/categorias/editar/<int:id_categoria>", methods=["GET", "POST"])
