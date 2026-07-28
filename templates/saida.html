@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>StockMaster | Saída</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/movimentacao.css') }}"
+    >
+</head>
+
+<body>
+
+<main class="movimentacao-page">
+
+    <section class="movimentacao-card">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="back-link"
+        >
+            ← Voltar ao Dashboard
+        </a>
+
+        <h1>Saída de Estoque</h1>
+
+        <p>
+            Registre a retirada de produtos do estoque.
+        </p>
+
+        <form method="POST">
+
+            <div class="form-group">
+
+                <label for="produto_id">
+                    Produto
+                </label>
+
+                <select
+                    name="produto_id"
+                    id="produto_id"
+                    required
+                >
+
+                    <option value="">
+                        Selecione um produto
+                    </option>
+
+                    {% for produto in produtos %}
+
+                        <option value="{{ produto.id_produto }}">
+
+                            {{ produto.nome_produto }}
+                            — Estoque: {{ produto.quantidade_produto }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="quantidade">
+                    Quantidade de saída
+                </label>
+
+                <input
+                    type="number"
+                    name="quantidade"
+                    id="quantidade"
+                    min="1"
+                    placeholder="Ex.: 5"
+                    required
+                >
+
+            </div>
+
+            <button type="submit">
+                Registrar saída
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

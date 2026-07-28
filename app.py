@@ -455,6 +455,114 @@ def entrada():
     
     finally:
         conexao.close()
-                        
+        
+
+@app.route("/saidas", methods=["GET", "POST"])
+
+def saida():
+    conexao = criar_conexao()
+    
+    try:
+        
+        if request.method == "POST":
+            
+            produto_id = request.form.get("produto_id")
+            quantidade = request.form.get("quantidade")
+            
+            if not produto_id or not quantidade:
+                return "Selecione o produto e informe a quantidade."
+            
+            produto_id = int(produto_id)
+            quantidade = int(quantidade)
+            
+            if quantidade <= 0:
+                return"A quantidade deve ser maior que zero."
+            
+            with conexao.cursor() as cursor:
+                
+                cursor.execute ("""
+                SELECT
+                    nome_produto,
+                    quantidade_produto
+                FROM tbl_produtos
+                WHERE id_produto = %s
+                """, (produto_id,))
+
+                produto = cursor.fetchone()
+                
+                if not produto:
+                    return "Prodouto não encontrado."
+                
+                estoque_atual = produto["quantidade_produto"]
+                
+                
+                if quantidade > estoque_atual:
+                    return(
+                        f"Estoque insuficiente."
+                        f"Quantidade disponivel: {estoque_atual}."
+                    )
+                    
+                cursor.execute("""
+                    UPDATE tbl_produtos
+                    SET quantidade_produto =
+                        quantidade_produto - %s
+                    WHERE id_produto = %s            
+                """, (
+                    quantidade,
+                    produto_id
+                ))
+                
+                cursor.execute("""
+                INSERT INTO tbl_movimentacoes (
+                    produtos_id,
+                    tipo_movimentacoes,
+                    quantidade_movimentacoes,
+                    data_movimentacoes
+                )
+                VALUES (%s, %s, %s, NOW())
+                """, (
+                    produto_id,
+                    "Saída",
+                    quantidade
+                ))
+                
+                conexao.commit()
+            
+            return redirect(url_for("saida"))
+        
+        with conexao.cursor() as cursor:
+            
+            cursor.execute("""
+                SELECT
+                    id_produto,
+                    nome_produto,
+                    quantidade_produto
+                FROM tbl_produtos
+                ORDER BY nome_produto             
+            """)
+            
+            produtos = cursor.fetchall()
+            
+            return render_template(
+                "saida.html",
+                produtos=produtos
+            )
+            
+    except ValueError:
+        
+        conexao.rollback()
+        
+        return "Produto ou quantidade inválidos."
+    
+    except Exception as erro:
+        
+        conexao.rollback()
+        
+        print("Erro na saida:", erro)
+        
+        return "Erro ao registrar saida."
+    
+    finally:
+        conexao.close()
 if __name__ == "__main__":
     app.run(debug=True)
