@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>StockMaster | Histórico</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/historico.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<main class="historico-container">
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="btn-voltar"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Voltar ao Dashboard
+    </a>
+
+    <header class="historico-header">
+
+        <div>
+            <h1>Histórico</h1>
+
+            <p>
+                Consulte todas as movimentações do estoque.
+            </p>
+        </div>
+
+    </header>
+
+    <section class="historico-card">
+
+        <div class="historico-topo">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="pesquisa-movimentacao"
+                    placeholder="Pesquisar produto ou movimentação..."
+                >
+
+            </div>
+
+            <span class="total-movimentacoes">
+                {{ movimentacoes|length }} movimentação(ões)
+            </span>
+
+        </div>
+
+        <div class="tabela-wrapper">
+
+            <table id="tabela-historico">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Data e hora</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% if movimentacoes %}
+
+                        {% for movimentacao in movimentacoes %}
+
+                            <tr>
+
+                                <td>
+                    {{ movimentacao.id_movimentacao }}
+                                    </td>
+
+                                    <td>
+                                 {{ movimentacao.nome_produto }}
+                                    </td>
+
+                            <td>
+                                {% if movimentacao.tipo_movimentacao == "Entrada" %}
+
+            <span class="status entrada">
+            <i class="fa-solid fa-arrow-up"></i>
+            Entrada
+        </span>
+
+    {% else %}
+
+        <span class="status saida">
+            <i class="fa-solid fa-arrow-down"></i>
+            Saída
+        </span>
+
+    {% endif %}
+</td>
+
+<td>
+    {{ movimentacao.quantidade_movimentacao }}
+</td>
+
+<td>
+    {{ movimentacao.data_movimentacao }}
+</td>
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="5" class="sem-movimentacoes">
+
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                                Nenhuma movimentação registrada.
+
+                            </td>
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/historico.js') }}"></script>
+
+</body>
+
+</html>

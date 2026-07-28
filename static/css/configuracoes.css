@@ -1,0 +1,216 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+.configuracoes-container {
+    min-height: 100vh;
+    padding: 35px 45px;
+}
+
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 25px;
+
+    color: #94a3b8;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.btn-voltar:hover {
+    color: #ffffff;
+    transform: translateX(-3px);
+}
+
+.configuracoes-header {
+    margin-bottom: 30px;
+}
+
+.configuracoes-header h1 {
+    margin-bottom: 6px;
+    font-size: 32px;
+}
+
+.configuracoes-header p {
+    color: #94a3b8;
+}
+
+.configuracoes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+
+    margin-bottom: 25px;
+}
+
+.config-card {
+    display: flex;
+    gap: 20px;
+
+    padding: 25px;
+
+    background: #1e293b;
+
+    border: 1px solid #334155;
+    border-radius: 16px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.config-card-largo {
+    grid-column: 1 / -1;
+}
+
+.card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    background: rgba(52, 120, 246, 0.15);
+    color: #60a5fa;
+
+    border-radius: 12px;
+
+    font-size: 21px;
+}
+
+.card-content {
+    width: 100%;
+}
+
+.card-content h2 {
+    margin-bottom: 22px;
+    font-size: 20px;
+}
+
+.info-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #334155;
+}
+
+.info-group:last-child {
+    border-bottom: none;
+}
+
+.info-group span {
+    color: #94a3b8;
+}
+
+.info-group strong {
+    color: #ffffff;
+    text-align: right;
+}
+
+.descricao {
+    color: #cbd5e1;
+    line-height: 1.7;
+}
+
+.logout-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 25px;
+
+    background: #1e293b;
+
+    border: 1px solid #334155;
+    border-radius: 16px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.logout-card h2 {
+    margin-bottom: 6px;
+    font-size: 20px;
+}
+
+.logout-card p {
+    color: #94a3b8;
+}
+
+.btn-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 13px 20px;
+
+    background: #dc2626;
+    color: #ffffff;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 800px) {
+    .configuracoes-container {
+        padding: 25px 18px;
+    }
+
+    .configuracoes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .config-card-largo {
+        grid-column: auto;
+    }
+
+    .logout-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-logout {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    .config-card {
+        flex-direction: column;
+    }
+
+    .info-group {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .info-group strong {
+        text-align: left;
+    }
+}

@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_bcrypt import Bcrypt
 from database.conexao import criar_conexao
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+app.secret_key = "stockmaster-chave-secreta"
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -30,6 +31,10 @@ def login():
                 usuario["senha_usuario"],
                 senha
             ):
+                session["usuario_id"] = usuario["id_usuario"]
+                session["usuario_nome"] = usuario["nome_usuario"]
+                session["usuario_email"] = usuario["email_usuario"]
+
                 return redirect(url_for("dashboard"))
 
             return "E-mail ou senha incorretos!"
@@ -564,5 +569,130 @@ def saida():
     
     finally:
         conexao.close()
+        
+@app.route("/historico")
+def historico():
+    conexao = criar_conexao()
+
+    try:
+        with conexao.cursor() as cursor:
+            cursor.execute("""
+                SELECT
+                    m.id_movimentacoes AS id_movimentacao,
+                    p.nome_produto AS nome_produto,
+                    m.tipo_movimentacoes AS tipo_movimentacao,
+                    m.quantidade_movimentacoes AS quantidade_movimentacao,
+                    m.data_movimentacoes AS data_movimentacao
+                FROM tbl_movimentacoes AS m
+
+                INNER JOIN tbl_produtos AS p
+                    ON m.produtos_id = p.id_produto
+
+                ORDER BY m.data_movimentacoes DESC
+            """)
+
+            movimentacoes = cursor.fetchall()
+
+        return render_template(
+            "historico.html",
+            movimentacoes=movimentacoes
+        )
+
+    except Exception as erro:
+        print("Erro ao carregar histórico:", erro)
+        return "Erro ao carregar histórico."
+
+    finally:
+        conexao.close()
+        
+@app.route("/relatorios")
+def relatorios():
+    conexao = criar_conexao()
+
+    try:
+        with conexao.cursor() as cursor:
+
+            cursor.execute("""
+                SELECT COUNT(*) AS total_produtos
+                FROM tbl_produtos
+            """)
+            total_produtos = cursor.fetchone()["total_produtos"]
+
+            cursor.execute("""
+                SELECT COUNT(*) AS estoque_baixo
+                FROM tbl_produtos
+                WHERE quantidade_produto <= 5
+            """)
+            estoque_baixo = cursor.fetchone()["estoque_baixo"]
+
+            cursor.execute("""
+                SELECT
+                    COALESCE(
+                        SUM(quantidade_movimentacoes),
+                        0
+                    ) AS total_entradas
+                FROM tbl_movimentacoes
+                WHERE tipo_movimentacoes = 'Entrada'
+            """)
+            total_entradas = cursor.fetchone()["total_entradas"]
+
+            cursor.execute("""
+                SELECT
+                    COALESCE(
+                        SUM(quantidade_movimentacoes),
+                        0
+                    ) AS total_saidas
+                FROM tbl_movimentacoes
+                WHERE tipo_movimentacoes = 'Saída'
+            """)
+            total_saidas = cursor.fetchone()["total_saidas"]
+
+            cursor.execute("""
+                SELECT
+                    p.nome_produto,
+                    p.quantidade_produto
+                FROM tbl_produtos AS p
+                ORDER BY p.quantidade_produto ASC
+                LIMIT 5
+            """)
+            produtos_criticos = cursor.fetchall()
+
+        return render_template(
+            "relatorios.html",
+            total_produtos=total_produtos,
+            estoque_baixo=estoque_baixo,
+            total_entradas=total_entradas,
+            total_saidas=total_saidas,
+            produtos_criticos=produtos_criticos
+        )
+
+    except Exception as erro:
+        print("Erro ao carregar relatórios:", erro)
+        return "Erro ao carregar relatórios."
+
+    finally:
+        conexao.close()
+        
+
+@app.route("/configuracoes")
+def configuracoes():
+
+    usuario = {
+        "nome": session.get("usuario_nome", "Usuário"),
+        "email": session.get("usuario_email", "E-mail não informado")
+    }
+
+    return render_template(
+        "configuracoes.html",
+        usuario=usuario,
+        versao="1.0.0"
+    )
+    
+@app.route("/logout")
+def logout():
+    session.clear()
+
+    return redirect(url_for("login"))
+
 if __name__ == "__main__":
     app.run(debug=True)

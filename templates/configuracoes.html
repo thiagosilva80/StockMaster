@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>StockMaster | Configurações</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/configuracoes.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<main class="configuracoes-container">
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="btn-voltar"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Voltar ao Dashboard
+    </a>
+
+    <header class="configuracoes-header">
+
+        <h1>Configurações</h1>
+
+        <p>
+            Consulte seus dados e as informações do sistema.
+        </p>
+
+    </header>
+
+    <section class="configuracoes-grid">
+
+        <article class="config-card">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div class="card-content">
+
+                <h2>Dados do usuário</h2>
+
+                <div class="info-group">
+                    <span>Nome</span>
+                    <strong>{{ usuario.nome }}</strong>
+                </div>
+
+                <div class="info-group">
+                    <span>E-mail</span>
+                    <strong>{{ usuario.email }}</strong>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="config-card">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-box"></i>
+            </div>
+
+            <div class="card-content">
+
+                <h2>Informações do sistema</h2>
+
+                <div class="info-group">
+                    <span>Sistema</span>
+                    <strong>StockMaster</strong>
+                </div>
+
+                <div class="info-group">
+                    <span>Versão</span>
+                    <strong>{{ versao }}</strong>
+                </div>
+
+                <div class="info-group">
+                    <span>Tecnologias</span>
+                    <strong>Flask, MySQL, HTML, CSS e JavaScript</strong>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="config-card config-card-largo">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+
+            <div class="card-content">
+
+                <h2>Sobre o projeto</h2>
+
+                <p class="descricao">
+                    O StockMaster é um sistema de gerenciamento de estoque
+                    desenvolvido para controlar produtos, categorias,
+                    entradas, saídas, histórico e relatórios.
+                </p>
+
+            </div>
+
+        </article>
+
+    </section>
+
+    <section class="logout-card">
+
+        <div>
+
+            <h2>Sair do sistema</h2>
+
+            <p>
+                Encerre sua sessão atual com segurança.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="btn-logout"
+        >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Sair
+        </a>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>StockMaster | Relatórios</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/relatorios.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<main class="relatorios-container">
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="btn-voltar"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Voltar ao Dashboard
+    </a>
+
+    <header class="relatorios-header">
+        <h1>Relatórios</h1>
+
+        <p>
+            Acompanhe os principais dados do estoque.
+        </p>
+    </header>
+
+    <section class="cards">
+
+        <article class="card">
+            <i class="fa-solid fa-box"></i>
+
+            <span>Total de produtos</span>
+
+            <strong>{{ total_produtos }}</strong>
+        </article>
+
+        <article class="card">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+            <span>Estoque baixo</span>
+
+            <strong>{{ estoque_baixo }}</strong>
+        </article>
+
+        <article class="card">
+            <i class="fa-solid fa-arrow-up"></i>
+
+            <span>Total de entradas</span>
+
+            <strong>{{ total_entradas }}</strong>
+        </article>
+
+        <article class="card">
+            <i class="fa-solid fa-arrow-down"></i>
+
+            <span>Total de saídas</span>
+
+            <strong>{{ total_saidas }}</strong>
+        </article>
+
+    </section>
+
+    <section class="relatorio-card">
+
+        <div class="relatorio-titulo">
+
+            <h2>Produtos com menor estoque</h2>
+
+            <p>
+                Os cinco produtos que precisam de mais atenção.
+            </p>
+
+        </div>
+
+        <div class="tabela-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Quantidade atual</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% if produtos_criticos %}
+
+                        {% for produto in produtos_criticos %}
+
+                            <tr>
+
+                                <td>
+                                    {{ produto.nome_produto }}
+                                </td>
+
+                                <td>
+                                    {{ produto.quantidade_produto }}
+                                </td>
+
+                                <td>
+
+                                    {% if produto.quantidade_produto == 0 %}
+
+                                        <span class="status esgotado">
+                                            Esgotado
+                                        </span>
+
+                                    {% elif produto.quantidade_produto <= 5 %}
+
+                                        <span class="status baixo">
+                                            Estoque baixo
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status normal">
+                                            Normal
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+                            <td colspan="3" class="vazio">
+                                Nenhum produto cadastrado.
+                            </td>
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>
