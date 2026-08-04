@@ -1,6 +1,6 @@
 # 📦 StockMaster
 
-Sistema web de controle de estoque desenvolvido com **Flask** e **MySQL**, com autenticação de usuários, cadastro de produtos, controle de entradas/saídas e relatórios em dashboard.
+Sistema web de controle de estoque desenvolvido com **Flask** e **SQLite**, com autenticação de usuários, cadastro de produtos, controle de entradas/saídas e relatórios em dashboard.
 
 ## ✨ Funcionalidades
 
@@ -16,9 +16,47 @@ Sistema web de controle de estoque desenvolvido com **Flask** e **MySQL**, com a
 - Flask-SQLAlchemy (ORM)
 - Flask-Login (sessão de usuário)
 - Flask-Bcrypt (hash de senhas)
-- MySQL (PyMySQL)
+- SQLite
 - HTML / CSS / JS
 
+## 🚀 Como rodar o projeto localmente
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/stockmaster.git
+cd stockmaster
+```
+
+### 2. Crie e ative um ambiente virtual
+
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Linux/Mac
+source venv/bin/activate
+```
+
+### 3. Instale as dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Banco de dados
+
+O SQLite é criado automaticamente no arquivo `stockmaster.db` ao iniciar a aplicação.
+
+### 5. Execute a aplicação
+
+```bash
+python app.py
+```
+
+Acesse em [http://localhost:5000](http://localhost:5000)
 
 ## 📁 Estrutura do projeto
 
