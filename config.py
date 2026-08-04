@@ -1,9 +1,12 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    SECRET_KEY = "stockmaster123"
-
-    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    SECRET_KEY = os.environ.get("SECRET_KEY", "troque-esta-chave")
 
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(BASE_DIR, "stockmaster.db")
 
